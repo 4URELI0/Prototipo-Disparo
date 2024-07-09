@@ -25,12 +25,17 @@ public class Weapon : MonoBehaviour
     public float bulletPrefabLifeTime = 3f;//segundos
 
     public GameObject muzzleEffect;
+    public GameObject catridge;
     //Animacion
     private Animator animator;
     //Audios
     private AudioSource randomSource;
     public AudioClip[] audioShot;
     /*Modo de disparo*/
+
+    private ParticleSystem muzzleParticleSystem;
+    private ParticleSystem catridgeParticpleSystem;
+    [SerializeField] ParticleSystem smoke;
     public enum ShootingMode
     {
         Single,
@@ -44,6 +49,8 @@ public class Weapon : MonoBehaviour
         burstBulletLeft = bulletPerBust;
         animator = GetComponent<Animator>();
         randomSource = GetComponent<AudioSource>();
+        muzzleParticleSystem = muzzleEffect.GetComponent<ParticleSystem>();
+        catridgeParticpleSystem = catridge.GetComponent<ParticleSystem>();
     }
     void Update()
     {
@@ -65,10 +72,13 @@ public class Weapon : MonoBehaviour
     }
     void FireWeapon() 
     {
-        muzzleEffect.GetComponent<ParticleSystem>().Play();
+        muzzleParticleSystem.Play();
         RandomShot();
         animator.SetTrigger("RECOIL");
         readyToShoot = false;
+        animator.SetTrigger("RELOAD");
+        smoke.Play();
+        catridgeParticpleSystem.Play();
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
         //Instanciar la bala
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
