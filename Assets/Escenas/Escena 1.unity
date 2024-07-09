@@ -842,6 +842,22 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: audioShot.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: audioShot.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d04672a8edb50c439b2e02c8088fa9c, type: 3}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: audioShot.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f64f2f918bfe7d346ad01c5984126423, type: 3}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: audioShot.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 02cb94d3ee2298544ae50259d07975dc, type: 3}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
       propertyPath: soundShotGun.Array.size
       value: 3
       objectReference: {fileID: 0}
