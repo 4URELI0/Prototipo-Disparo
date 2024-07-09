@@ -27,7 +27,9 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleEffect;
     //Animacion
     private Animator animator;
-    
+    //Audios
+    private AudioSource randomSource;
+    public AudioClip[] audioShot;
     /*Modo de disparo*/
     public enum ShootingMode
     {
@@ -41,6 +43,7 @@ public class Weapon : MonoBehaviour
         readyToShoot = true;
         burstBulletLeft = bulletPerBust;
         animator = GetComponent<Animator>();
+        randomSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -63,6 +66,7 @@ public class Weapon : MonoBehaviour
     void FireWeapon() 
     {
         muzzleEffect.GetComponent<ParticleSystem>().Play();
+        RandomShot();
         animator.SetTrigger("RECOIL");
         readyToShoot = false;
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
@@ -119,5 +123,10 @@ public class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Destroy(bullet);
+    }
+    void RandomShot()
+    {
+        randomSource.clip = audioShot[UnityEngine.Random.Range(0, audioShot.Length)];
+        randomSource.Play();
     }
 }
