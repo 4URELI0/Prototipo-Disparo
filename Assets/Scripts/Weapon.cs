@@ -38,9 +38,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] ParticleSystem smoke;
     public enum ShootingMode
     {
-        Single,
-        Burst,
-        Auto
+        Single
+        //Burst,
+        //Auto
     }
     public ShootingMode currentShootingMode;
     private void Awake()
@@ -54,14 +54,9 @@ public class Weapon : MonoBehaviour
     }
     void Update()
     {
-        if (currentShootingMode == ShootingMode.Auto)
+        if (currentShootingMode == ShootingMode.Single)
         {
             //Mantener presionado el boton izquierdo del mouse
-            isShooting = Input.GetKey(KeyCode.Mouse0);
-        }
-        else if (currentShootingMode == ShootingMode.Single || currentShootingMode == ShootingMode.Burst)
-        {
-            //Hacer click solo una vez 
             isShooting = Input.GetKey(KeyCode.Mouse0);
         }
         if (readyToShoot && isShooting)
@@ -95,11 +90,11 @@ public class Weapon : MonoBehaviour
             allowReset = false;
         }
 
-        if (currentShootingMode == ShootingMode.Burst && burstBulletLeft > 1)
+        /*if (currentShootingMode == ShootingMode.Single && burstBulletLeft > 1)
         {
             burstBulletLeft--;
             Invoke("FireWeapon", shootingDelay);
-        }
+        }*/
     }
     private void ResetShot()
     {
