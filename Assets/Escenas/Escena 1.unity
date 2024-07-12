@@ -826,6 +826,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1401718829}
     - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: smooth
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
       propertyPath: catridge
       value: 
       objectReference: {fileID: 7155788390074413620}
@@ -846,8 +850,12 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
-      propertyPath: currentShootingMode
+      propertyPath: swayMultiplier
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
+      propertyPath: currentShootingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1497197022508310251, guid: 050811b49713f3349b578056295348fe, type: 3}
       propertyPath: audioShot.Array.size
