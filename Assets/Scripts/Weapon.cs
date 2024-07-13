@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleEffect;
     public GameObject catridge;
     //Animacion
-    private Animator animator;
+    //private Animator animator;
     //Audios
     private AudioSource randomSource;
     public AudioClip[] audioShot;
@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
     {
         readyToShoot = true;
         burstBulletLeft = bulletPerBust;
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         randomSource = GetComponent<AudioSource>();
         muzzleParticleSystem = muzzleEffect.GetComponent<ParticleSystem>();
         catridgeParticpleSystem = catridge.GetComponent<ParticleSystem>();
@@ -69,9 +69,9 @@ public class Weapon : MonoBehaviour
     {
         muzzleParticleSystem.Play();
         RandomShot();
-        animator.SetTrigger("RECOIL");
+        //animator.SetTrigger("RECOIL");
         readyToShoot = false;
-        animator.SetTrigger("RELOAD");
+        //animator.SetTrigger("RELOAD");
         smoke.Play();
         catridgeParticpleSystem.Play();
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
