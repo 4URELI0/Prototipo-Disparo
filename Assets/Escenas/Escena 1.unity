@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39985666, g: 0.41899043, b: 0.41753158, a: 1}
+  m_IndirectSpecularColor: {r: 0.45120764, g: 0.50094366, b: 0.5736564, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25175560}
   - component: {fileID: 25175561}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Suelos
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -279.6, y: -173}
+  m_AnchoredPosition: {x: -299, y: -118}
   m_SizeDelta: {x: 204, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &114115928
@@ -264,6 +264,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 25175560}
     m_Modifications:
+    - target: {fileID: 1008828673113590, guid: 338e73fe353e948689d2521406537127, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4648636265525868, guid: 338e73fe353e948689d2521406537127, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -15394,7 +15398,7 @@ GameObject:
   - component: {fileID: 847667372}
   - component: {fileID: 847667371}
   - component: {fileID: 847667370}
-  - component: {fileID: 847667374}
+  - component: {fileID: 847667375}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Target
@@ -15482,39 +15486,74 @@ Transform:
   m_GameObject: {fileID: 847667369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.63, y: 3.38, z: 8.625168}
+  m_LocalPosition: {x: -3.3, y: 4.233, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &847667374
-Rigidbody:
+--- !u!108 &847667375
+Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847667369}
-  serializedVersion: 4
-  m_Mass: 15
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 0.6037736, g: 0.58910644, b: 0.48643646, a: 1}
+  m_Intensity: 9.98
+  m_Range: 12.78
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &945301099
 GameObject:
   m_ObjectHideFlags: 0
@@ -15605,6 +15644,7 @@ GameObject:
   - component: {fileID: 1294222599}
   - component: {fileID: 1294222598}
   - component: {fileID: 1294222597}
+  - component: {fileID: 1294222600}
   m_Layer: 0
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
@@ -15620,14 +15660,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294222595}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.79999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2755468436969101737}
   - {fileID: 6877242946374980071}
   - {fileID: 5228977845194947402}
+  - {fileID: 6900490390412177338}
   m_Father: {fileID: 813455138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!124 &1294222597
@@ -15679,7 +15720,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 94
+  field of view: 64.5
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -15697,6 +15738,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1294222600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294222595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
+  RestPositionOffset: {x: 0, y: 0, z: 0}
+  RestRotationOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1401718826
 GameObject:
   m_ObjectHideFlags: 0
@@ -20612,13 +20669,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634628050}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.96568483, y: -0.005781608, z: 0.25875443, w: 0.02157726}
+  m_LocalRotation: {x: 0.92768997, y: -0.072099775, z: 0.24857375, w: 0.26908007}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 177.44, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 147.65, y: -30, z: 0}
 --- !u!1 &1669711169
 GameObject:
   m_ObjectHideFlags: 0
@@ -20692,7 +20749,7 @@ GameObject:
   - component: {fileID: 200327014}
   - component: {fileID: 1750804971}
   - component: {fileID: 1750804970}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Suelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26515,7 +26572,6 @@ Transform:
   m_Children:
   - {fileID: 6525072247566354743}
   - {fileID: 2183467839661619743}
-  - {fileID: 6900490390412177338}
   m_Father: {fileID: 1294222596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2878777750269686954
@@ -32975,10 +33031,15 @@ MonoBehaviour:
   totalAmmo: 12
   allowButtonHold: 1
   fpsCam: {fileID: 1294222599}
-  attackPoint: {fileID: 1676169318}
+  attackPoint: {fileID: 0}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295
+  camShake: {fileID: 0}
+  camShakerMagnitude: 0
+  roughness: 0
+  fadeInTime: 0
+  fadeOutTime: 0
   muzzleEffect: {fileID: 4857488394364748717}
   catridge: {fileID: 7155788390074413620}
   smoke: {fileID: 1401718829}
@@ -32996,8 +33057,8 @@ Transform:
   m_GameObject: {fileID: 6091303075362108672}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.237, y: 0.114, z: 0.794}
-  m_LocalScale: {x: 0.050000004, y: 0.05, z: 0.050000004}
+  m_LocalPosition: {x: 0.47400016, y: -0.582, z: 1.4470003}
+  m_LocalScale: {x: 0.10000002, y: 0.1, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7760495873007465695}
@@ -33015,7 +33076,7 @@ Transform:
   - {fileID: 1987732904}
   - {fileID: 580325213}
   - {fileID: 945301100}
-  m_Father: {fileID: 2755468436969101737}
+  m_Father: {fileID: 1294222596}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &6900490390412177339
 MonoBehaviour:
@@ -33042,7 +33103,12 @@ MonoBehaviour:
   attackPoint: {fileID: 3949981500123444755}
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
+  camShake: {fileID: 1294222600}
+  camShakerMagnitude: 4
+  roughness: 4
+  fadeInTime: 0.1
+  fadeOutTime: 1
   muzzleEffect: {fileID: 1987732903}
   catridge: {fileID: 580325212}
   smoke: {fileID: 258506368}
