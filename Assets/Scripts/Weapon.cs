@@ -1,137 +1,158 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
-    public Camera playerCamera;
-    //Disparando
-    public bool isShooting, readyToShoot;
-    bool allowReset = true;
-    public float shootingDelay = 3f;
-    //Explosion
-    public int bulletPerBust = 3;
-    public int burstBulletLeft;
-    //Intensidad de dispersion
-    public float spreadIntensity;
+    //estadísticas de armas
+    [Header("Daño del arma")]
+    public int damage;
+    [Header("El tiempo que pasa tras cada disparo")]
+    public float timeBeetwenShooting;
+    [Header("Dispersion de los disparos")]
+    public float spread;
+    [Header("El alcance de la bala")]
+    public float range;
+    [Header("El tiempo de recarga del arma")]
+    public float reloadTime;
+    [Header("El tiempo que pasa entre cada bala cuando hay multiples disparos")]
+    public float timeBeetwenShots;
+    [Header("El cargador del arma")]
+    public int magazineSize;
+    private int bulletPerTap = 1;
+    [Header("Indica si permite mantener presionado el boton para disparar continuamente")]
+    public bool allowButtonHold;
+    int bulletsLeft, bulletsShot;
 
-    //Bala
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float bulletVelocity = 30;
-    public float bulletPrefabLifeTime = 3f;//segundos
+    //Booleanos
+    bool shooting, readyToShoot, reloading;
 
+    //Referencias
+    [Header("Camara del jugador")]
+    public Camera fpsCam;
+    [Header("Respawn de la bala")]
+    public Transform attackPoint;
+    [Header("Objeto impactado")]
+    public RaycastHit rayHit;
+    [Header("Enemigo que se puede bajar la vida")]
+    public LayerMask whatIsEnemy;
+    //Camara shake 5:33
+
+    //Particulas
+    [Header("Fogonazo del arma")]
     public GameObject muzzleEffect;
+    [Header("Animacion de cartucho o bala")]
     public GameObject catridge;
-    //Animacion
-    //private Animator animator;
-    //Audios
-    private AudioSource randomSource;
-    public AudioClip[] audioShot;
-    /*Modo de disparo*/
-
     private ParticleSystem muzzleParticleSystem;
-    private ParticleSystem catridgeParticpleSystem;
+    private ParticleSystem catridgeParticleSystem;
+    [Header("Humo al disparar")]
     [SerializeField] ParticleSystem smoke;
-    public enum ShootingMode
-    {
-        Single
-        //Burst,
-        //Auto
-    }
-    public ShootingMode currentShootingMode;
+
+    private AudioSource randomSource;
+    [Header("Sonido de disparos")]
+    public AudioClip[] audioShot;
+
+    //Text
+    [Header("Texto")]
+    public Text ammoText;
+
     private void Awake()
     {
-        readyToShoot = true;
-        burstBulletLeft = bulletPerBust;
-        //animator = GetComponent<Animator>();
-        randomSource = GetComponent<AudioSource>();
         muzzleParticleSystem = muzzleEffect.GetComponent<ParticleSystem>();
-        catridgeParticpleSystem = catridge.GetComponent<ParticleSystem>();
+        catridgeParticleSystem = catridge.GetComponent<ParticleSystem>();
+        randomSource = GetComponent<AudioSource>();
+        bulletsLeft = magazineSize;
+        readyToShoot = true;
     }
-    void Update()
+    private void Update()
     {
-        if (currentShootingMode == ShootingMode.Single)
-        {
-            //Mantener presionado el boton izquierdo del mouse
-            isShooting = Input.GetKey(KeyCode.Mouse0);
-        }
-        if (readyToShoot && isShooting)
-        {
-            burstBulletLeft = bulletPerBust;
-            FireWeapon();
-        }
+        MyInput();
+        ammoText.text = bulletsLeft + "/" + magazineSize;
     }
-    void FireWeapon() 
+    private void MyInput()
     {
-        muzzleParticleSystem.Play();
-        RandomShot();
-        //animator.SetTrigger("RECOIL");
-        readyToShoot = false;
-        //animator.SetTrigger("RELOAD");
-        smoke.Play();
-        catridgeParticpleSystem.Play();
-        Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
-        //Instanciar la bala
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-        //Apuntar la bala hacia la dirección de disparo
-        bullet.transform.forward = shootingDirection;
-        //Disparar la bala
-        bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
-        //Destruir a la bala despues de un tiempo(ya se encontrara la manera de implementar object pooling)
-        StartCoroutine(DestroyBulletAfterTime(bullet, bulletPrefabLifeTime));
-        //Controlar si estamos disparando
-        if (allowReset)
+        if (allowButtonHold)
         {
-            Invoke("ResetShot", shootingDelay);
-            allowReset = false;
+            shooting = Input.GetKey(KeyCode.Mouse0);
+        }
+        else
+        {
+            shooting = Input.GetKeyDown(KeyCode.Mouse0);
         }
 
-        /*if (currentShootingMode == ShootingMode.Single && burstBulletLeft > 1)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
         {
-            burstBulletLeft--;
-            Invoke("FireWeapon", shootingDelay);
-        }*/
+            Reload();
+        }
+        //Disparar
+        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        {
+            bulletsShot = bulletPerTap;
+            Shoot();
+        }
+    }
+    private void Shoot()
+    {
+        readyToShoot = false;
+        muzzleParticleSystem.Play();
+        catridgeParticleSystem.Play();
+        smoke.Play();
+        RandomShot();
+        //dispersion de bala
+        float x = Random.Range(-spread, spread);
+        float y = Random.Range(-spread, spread);
+
+        //Calcular direccion de la dispersion
+        Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
+
+        //RayCast
+        if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
+        {
+            Debug.Log(rayHit.collider.name);
+
+            //Usar este if para el ucumar
+            /*if (rayHit.collider.CompareTag("Enemy"))
+            {
+                rayHit.collider.GetComponent<ShootingAI>().TakeDamage(damage);
+            }*/
+        }
+
+        /*Particulas*/
+        //Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+
+        bulletsLeft--;
+        bulletsShot--;
+        Invoke("ResetShot", timeBeetwenShooting);
+
+        if (bulletsShot > 0 && bulletsLeft > 0)
+        {
+            Invoke("Shoot", timeBeetwenShots);
+            Debug.Log("Disparo!");
+        }
     }
     private void ResetShot()
     {
         readyToShoot = true;
-        allowReset = true;
     }
-    public Vector3 CalculateDirectionAndSpread()
+    private void Reload()
     {
-        //Disparando desde el centro de la pantalla para comprobar hacia dónde apuntamos
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
-        {
-            //Golpear contra algo
-            targetPoint = hit.point;
-        }
-        else
-        {
-            //Sin ningun objetivo de disparo
-            targetPoint = ray.GetPoint(100);
-        }
-        Vector3 direction = targetPoint - bulletSpawn.position;
-        float x = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
-        float y = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
-
-        //Volviendo a la dirección de disparo y extendiéndose.
-        return direction + new Vector3(x, y, 0);
+        reloading = true;
+        Invoke("ReloadFinished", reloadTime);
     }
-    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+    private void ReloadFinished()
     {
-        yield return new WaitForSeconds(delay);
-        Destroy(bullet);
+        bulletsLeft = magazineSize;
+        reloading = false;
     }
-    void RandomShot()
+    private void RandomShot()
     {
-        randomSource.clip = audioShot[UnityEngine.Random.Range(0, audioShot.Length)];
+        randomSource.clip = audioShot[Random.Range(0, audioShot.Length)];
         randomSource.Play();
     }
 }
