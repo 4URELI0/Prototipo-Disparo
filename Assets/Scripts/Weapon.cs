@@ -1,8 +1,8 @@
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
@@ -23,9 +23,11 @@ public class Weapon : MonoBehaviour
     public float reloadTime;
     [Header("El tiempo que pasa entre cada bala cuando hay multiples disparos")]
     public float timeBeetwenShots;
-    [Header("El cargador del arma")]
+    [Header("Municion cargada al arma")]
     public int magazineSize;
     private int bulletPerTap = 1;
+    [Header("Municion disponible")]
+    public int totalAmmo;
     [Header("Indica si permite mantener presionado el boton para disparar continuamente")]
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
@@ -57,7 +59,6 @@ public class Weapon : MonoBehaviour
     private AudioSource randomSource;
     [Header("Sonido de disparos")]
     public AudioClip[] audioShot;
-
     //Text
     [Header("Texto")]
     public Text ammoText;
@@ -73,7 +74,7 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         MyInput();
-        ammoText.text = bulletsLeft + "/" + magazineSize;
+        ammoText.text = bulletsLeft + "/" + totalAmmo;
     }
     private void MyInput()
     {
@@ -147,7 +148,19 @@ public class Weapon : MonoBehaviour
     }
     private void ReloadFinished()
     {
-        bulletsLeft = magazineSize;
+        int bulletsToReload = magazineSize - bulletsLeft;
+        if (totalAmmo >= bulletsToReload)
+        {
+            bulletsLeft += bulletsToReload;
+            totalAmmo -= bulletsToReload;
+        }
+        else
+        {
+            bulletsLeft += totalAmmo;
+            totalAmmo = 0;
+            Debug.Log("No tienes municion");
+
+        }
         reloading = false;
     }
     private void RandomShot()
