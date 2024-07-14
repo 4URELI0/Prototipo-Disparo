@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 using Random = UnityEngine.Random;
+using EZCameraShake;
 
 public class Weapon : MonoBehaviour
 {
@@ -44,7 +45,18 @@ public class Weapon : MonoBehaviour
     public RaycastHit rayHit;
     [Header("Enemigo que se puede bajar la vida")]
     public LayerMask whatIsEnemy;
+
     //Camara shake 5:33
+    [Header("Referencia a camaraShake")]
+    public CameraShaker camShake;
+    [Header("Temblar la camara")]
+    public float camShakerMagnitude;
+    [Header("Erratica de la camara")]
+    public float roughness;
+    [Header("El tiempo que tomara para alcanzar la magnitud completa de temblor de la camara")]
+    public float fadeInTime;
+    [Header("El tiempo que tarda para dejar de sacudir")]
+    public float fadeOutTime;
 
     //Particulas
     [Header("Fogonazo del arma")]
@@ -123,7 +135,8 @@ public class Weapon : MonoBehaviour
                 rayHit.collider.GetComponent<ShootingAI>().TakeDamage(damage);
             }*/
         }
-
+        /*CAMERA SHAKE*/
+        CameraShaker.Instance.ShakeOnce(camShakerMagnitude, roughness, fadeInTime, fadeOutTime);
         /*Particulas*/
         //Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
 
